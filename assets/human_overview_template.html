@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{PROJECT_NAME}} Handoff Overview</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #17202a;
+      --muted: #5c6876;
+      --border: #d8dee7;
+      --accent: #245fbd;
+      --warn-bg: #fff6e5;
+      --warn: #834600;
+      --code-bg: #111827;
+      --code-text: #e5edf7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.58;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      padding: 28px 20px;
+      border-right: 1px solid var(--border);
+      background: var(--panel);
+    }
+    nav h1 { margin: 0 0 8px; font-size: 18px; line-height: 1.25; }
+    nav p { margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+    nav a { display: block; padding: 7px 0; color: var(--muted); text-decoration: none; font-size: 14px; }
+    nav a:hover { color: var(--accent); }
+    main { width: min(100%, 1080px); padding: 42px 36px 76px; }
+    section { margin: 0 0 34px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+    h2 { margin: 0 0 14px; font-size: 25px; line-height: 1.2; }
+    h3 { margin: 22px 0 8px; font-size: 18px; }
+    p { margin: 0 0 12px; }
+    ul, ol { margin: 8px 0 14px 22px; padding: 0; }
+    li { margin: 5px 0; }
+    code {
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: #e9edf3;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+    pre {
+      overflow-x: auto;
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--code-bg);
+      color: var(--code-text);
+    }
+    pre code { padding: 0; background: transparent; color: inherit; }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0; background: var(--panel); font-size: 14px; }
+    th, td { padding: 10px 12px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+    th { background: #eef2f7; font-weight: 650; }
+    .summary { padding: 14px 16px; border: 1px solid var(--border); border-left: 4px solid var(--accent); background: var(--panel); }
+    .warning { padding: 12px 14px; border: 1px solid #f0d49a; border-left: 4px solid #c77a00; background: var(--warn-bg); color: var(--warn); }
+    @media (max-width: 860px) {
+      .layout { display: block; }
+      nav { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+      main { padding: 28px 18px 48px; }
+      table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <nav aria-label="Project handoff navigation">
+      <h1>{{PROJECT_NAME}}</h1>
+      <p>{{HANDOFF_METADATA}}</p>
+      <a href="#executive-summary">Executive Summary</a>
+      <a href="#beginner-map">Beginner Map</a>
+      <a href="#technical-map">Technical Map</a>
+      <a href="#repository-structure">Repository Structure</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#agent-workflow">Agent / Workflow</a>
+      <a href="#chain-tools">Chain and Tools</a>
+      <a href="#schema-state-prompt">Schema, State, Prompt</a>
+      <a href="#testing-quality">Testing and Quality</a>
+      <a href="#evidence-confidence">Evidence and Confidence</a>
+      <a href="#risks-unknowns">Risks and Unknowns</a>
+      <a href="#maintenance-guide">Maintenance Guide</a>
+      <a href="#next-steps">Next Steps</a>
+    </nav>
+    <main>
+      <section id="executive-summary"><h2>Executive Summary</h2>{{EXECUTIVE_SUMMARY}}</section>
+      <section id="beginner-map"><h2>Beginner Map</h2>{{BEGINNER_MAP}}</section>
+      <section id="technical-map"><h2>Technical Map</h2>{{TECHNICAL_MAP}}</section>
+      <section id="repository-structure"><h2>Repository Structure</h2>{{REPOSITORY_STRUCTURE}}</section>
+      <section id="architecture"><h2>Architecture</h2>{{ARCHITECTURE}}</section>
+      <section id="agent-workflow"><h2>Agent / Workflow</h2>{{AGENT_WORKFLOW}}</section>
+      <section id="chain-tools"><h2>Chain and Tools</h2>{{CHAIN_TOOLS}}</section>
+      <section id="schema-state-prompt"><h2>Schema, State, Prompt</h2>{{SCHEMA_STATE_PROMPT}}</section>
+      <section id="testing-quality"><h2>Testing and Quality</h2>{{TESTING_QUALITY}}</section>
+      <section id="evidence-confidence"><h2>Evidence and Confidence</h2>{{EVIDENCE_CONFIDENCE}}</section>
+      <section id="risks-unknowns"><h2>Risks and Unknowns</h2>{{RISKS_UNKNOWNS}}</section>
+      <section id="maintenance-guide"><h2>Maintenance Guide</h2>{{MAINTENANCE_GUIDE}}</section>
+      <section id="next-steps"><h2>Next Steps</h2>{{NEXT_STEPS}}</section>
+    </main>
+  </div>
+</body>
+</html>
