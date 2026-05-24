@@ -1,0 +1,8 @@
+interface:
+  display_name: "Repo Handoff Pack"
+  short_description: "Create lightweight repo handoff indexes"
+  brand_color: "#2563EB"
+  default_prompt: "Use $repo-handoff-pack to load or refresh repository handoff context."
+
+policy:
+  allow_implicit_invocation: true

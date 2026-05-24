@@ -19,6 +19,7 @@ vendored into a project, the recommended project-local path is:
 - `references/*.md`
 - `assets/*.md`
 - `assets/*.html`
+- `agents/openai.yaml`
 - `scripts/*.py`
 - this `README.md`
 - `.gitignore`
