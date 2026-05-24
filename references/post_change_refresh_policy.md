@@ -43,7 +43,7 @@ Regenerate:
 - `docs/ai_handoff/llm_handoff.html`
 - `docs/ai_handoff/human_overview.html`
 
-Final docs should synthesize snapshots; source files should only be reread for specific gaps.
+Final docs should synthesize snapshots; source files should only be reread for specific gaps. Keep `llm_handoff.md` as a lightweight index and update only affected routes, snapshot references, confidence, and freshness notes instead of inlining detailed snapshot content.
 
 ## Step 6: Record state and change report
 

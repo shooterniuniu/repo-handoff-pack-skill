@@ -28,7 +28,7 @@
 
 ## Resume instruction
 
-Read `AGENTS.md`, this file, and `docs/ai_handoff/llm_handoff.md`. Then read only task-relevant snapshots and source files.
+Read `AGENTS.md`, this file, and `docs/ai_handoff/llm_handoff.md` as the lightweight context index. Then read only task-relevant snapshots, source files, and optional `_local/notes/<repo>/` files when useful or requested. Do not read `_local/env/` for values.
 
 ## Refresh policy
 

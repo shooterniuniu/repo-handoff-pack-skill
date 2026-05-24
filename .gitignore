@@ -15,6 +15,7 @@ Thumbs.db
 # Agent local state
 .codex/
 .agents/
+_local/
 logs/
 tmp/
 *.log

@@ -1,6 +1,6 @@
 ---
 name: repo-handoff-pack
-description: Repo Handoff Lifecycle Skill v2. Use for repository handoff lifecycle tasks: bootstrap docs/ai_handoff, intake inherited handoff docs, run staged full-build documentation, load handoff context before coding, refresh handoff docs after code changes, or check documentation drift. Produces human-readable and LLM-oriented handoff artifacts without modifying business code during documentation-only work.
+description: Repo Handoff Lifecycle Skill v2. Use for repository handoff lifecycle tasks: bootstrap docs/ai_handoff, intake inherited handoff docs, run staged full-build documentation, load lightweight context indexes before coding, refresh handoff docs after code changes, check documentation drift, or manage local/private _local workspace context. Produces human-readable and LLM-oriented handoff artifacts without modifying business code during documentation-only work.
 ---
 
 # Repo Handoff Lifecycle Skill v2
@@ -16,6 +16,8 @@ Choose one mode before taking action. If the user did not name a mode, infer the
 - Write skill workflow resources only under `.agents/skills/repo-handoff-pack/`.
 - Do not write generated documentation into `src/`, `app/`, `lib/`, `server/`, `packages/`, `services/`, `components/`, or other business-code directories.
 - Do not scan an entire repository in one pass.
+- Keep `docs/ai_handoff/llm_handoff.md` as a lightweight context index; put detailed evidence in snapshots and load it on demand.
+- Treat sibling `_local/` workspaces as optional local/private context. Do not commit them, and never copy secrets or raw environment values into handoff artifacts.
 - Always write intermediate snapshots before final synthesis in `full-build`.
 - Mark uncertainty explicitly.
 - Stop after each staged phase unless the user explicitly asks to continue.
@@ -68,7 +70,7 @@ Purpose:
 Outputs:
 
 - `docs/ai_handoff/snapshots/00_onboarding_intake.md`.
-- `docs/ai_handoff/llm_handoff.md` if missing or stale.
+- `docs/ai_handoff/llm_handoff.md` as a lightweight index if missing or stale.
 - `docs/ai_handoff/HANDOFF_STATE.md`.
 
 ### full-build
@@ -91,7 +93,7 @@ Outputs:
 - `docs/ai_handoff/snapshots/04_schema_datastore_prompt.md`.
 - `docs/ai_handoff/snapshots/05_tests_and_risks.md`.
 - `docs/ai_handoff/human_overview.html`.
-- `docs/ai_handoff/llm_handoff.md`.
+- `docs/ai_handoff/llm_handoff.md` as a lightweight index and routing map.
 - `docs/ai_handoff/llm_handoff.html`.
 - `docs/ai_handoff/HANDOFF_STATE.md`.
 
@@ -104,8 +106,9 @@ Purpose:
 - Load project context without regenerating documentation.
 - Read `AGENTS.md`.
 - Read `docs/ai_handoff/HANDOFF_STATE.md`.
-- Read `docs/ai_handoff/llm_handoff.md`.
-- Read only task-relevant snapshots.
+- Read `docs/ai_handoff/llm_handoff.md` as the context index.
+- Read only task-relevant snapshots named by the index.
+- Read `_local/notes/<repo>/` only when useful for the task or explicitly requested, and mark it local/private.
 - Read only task-relevant source files.
 
 Output:
@@ -160,7 +163,8 @@ When documentation conflicts with code, use this order:
 4. Current `docs/ai_handoff/snapshots/`
 5. README and other project docs
 6. Imported or inherited handoff documents
-7. User-provided natural language context
+7. Local/private notes, when explicitly read for the task
+8. User-provided natural language context
 
 Always mark conflicts explicitly:
 
@@ -247,6 +251,7 @@ Avoid these paths unless the user explicitly requires them:
 - `vendor/`
 - `.env`
 - `.env.*` except safe examples such as `.env.example`
+- `_local/` except task-relevant `_local/notes/<repo>/` when explicitly useful
 - generated files
 - large binary files
 - large datasets
@@ -264,6 +269,8 @@ Load references only when needed:
 - `references/source_of_truth_policy.md`: evidence priority and conflict format.
 - `references/output_contract.md`: required outputs and section contracts.
 - `references/phase_prompts.md`: full-build Phase 0-5 prompts.
+- `references/progressive_disclosure_policy.md`: lightweight LLM index and on-demand snapshot loading.
+- `references/local_workspace_policy.md`: optional `_local/` workspace layout, local notes, env safety, and local git excludes.
 
 Use assets for output generation:
 

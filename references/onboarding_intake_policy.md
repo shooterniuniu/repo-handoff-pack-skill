@@ -11,6 +11,8 @@ Use for `onboarding-intake` when joining an unfamiliar repository or inheriting 
 5. README, architecture docs, runbooks, ADRs, operations docs, and imported handoffs.
 6. A small set of source files only for critical claim validation.
 
+Read only snapshots that are relevant to the intake goal. Use `llm_handoff.md` as an index when it is present.
+
 ## Critical-claim validation
 
 Validate claims that affect immediate work:
@@ -36,7 +38,7 @@ Write `docs/ai_handoff/snapshots/00_onboarding_intake.md` with:
 - task-load guidance
 - unknowns and next recommended action
 
-Update `HANDOFF_STATE.md`. Create or refresh `llm_handoff.md` only if missing or stale enough that `task-load` would mislead a future agent.
+Update `HANDOFF_STATE.md`. Create or refresh `llm_handoff.md` only if missing or stale enough that `task-load` would mislead a future agent. When refreshing it, keep it as a lightweight context index and route detailed inherited context to snapshots.
 
 ## Staleness signals
 

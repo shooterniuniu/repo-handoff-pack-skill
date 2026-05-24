@@ -13,6 +13,7 @@ Output `docs/ai_handoff/snapshots/00_repo_inventory.md` with:
 - candidate entrypoints
 - candidate agent/workflow/tool/schema/state/prompt/test files
 - monorepo or nested-package signals
+- optional sibling `_local/` presence, without reading private contents
 - Phase 1 recommended reads
 - unknowns
 
@@ -75,8 +76,8 @@ Use snapshots as the primary source.
 Outputs:
 
 - `docs/ai_handoff/human_overview.html`
-- `docs/ai_handoff/llm_handoff.md`
+- `docs/ai_handoff/llm_handoff.md` as a lightweight context index and task routing map
 - `docs/ai_handoff/llm_handoff.html`
 - updated `docs/ai_handoff/HANDOFF_STATE.md`
 
-Only re-read source files when snapshots identify a specific critical gap. Final docs must be useful to both humans and future LLM agents.
+Only re-read source files when snapshots identify a specific critical gap. Final docs must be useful to both humans and future LLM agents. Keep detailed explanations in snapshots and the human overview; keep the LLM handoff concise enough to guide on-demand reads.
