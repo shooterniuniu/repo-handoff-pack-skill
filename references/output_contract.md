@@ -4,23 +4,27 @@ Use this reference when creating or refreshing handoff artifacts.
 
 ## Directories
 
-- Project memory: `docs/ai_handoff/`
-- Snapshots: `docs/ai_handoff/snapshots/`
-- Incremental refresh reports: `docs/ai_handoff/changes/`
+- Local handoff root: `_local/handoff/<repo>/`
+- Final handoff docs: `_local/handoff/<repo>/docs/`
+- Snapshots: `_local/handoff/<repo>/snapshots/`
+- Incremental refresh reports: `_local/handoff/<repo>/changes/`
+- Handoff state: `_local/handoff/<repo>/state/HANDOFF_STATE.md`
 - Skill resources: `.agents/skills/repo-handoff-pack/`
+- Personal/local learning materials: `_local/notes/<repo>/`
+- Local environment materials: `_local/env/<repo>/`
 - Optional local/private workspace: sibling `_local/` directory, such as `<workspace>/_local/`
 
-Generated handoff artifacts must stay under `docs/ai_handoff/`. Skill templates, references, and optional scripts stay under `.agents/skills/repo-handoff-pack/`.
+Generated handoff artifacts must stay under `_local/handoff/<repo>/` by default. Personal study notes, source-reading logs, questions, diagrams, and local task notes are not handoff artifacts; write them under `_local/notes/<repo>/` by default. Skill templates, references, and optional scripts stay under `.agents/skills/repo-handoff-pack/`.
 
-Do not write `_local/` contents into generated handoff artifacts by default. When local notes are explicitly useful, cite them as `local/private` and keep secrets out of committed docs.
+Use `docs/ai_handoff/` only when the user explicitly asks for committed/shared repository handoff docs or when reading existing legacy handoff files. Do not copy local notes or local environment contents into committed docs. When local notes are explicitly useful, cite them as `local/private` and keep secrets out of all artifacts.
 
 ## Required artifacts by mode
 
 | Mode | Required outputs |
 | --- | --- |
-| `bootstrap` | `AGENTS.md` handoff section, `docs/ai_handoff/HANDOFF_STATE.md`, `docs/ai_handoff/snapshots/` |
-| `onboarding-intake` | `snapshots/00_onboarding_intake.md`, `HANDOFF_STATE.md`, maybe lightweight `llm_handoff.md` |
-| `full-build` | Phase snapshots, `human_overview.html`, lightweight `llm_handoff.md`, `llm_handoff.html`, `HANDOFF_STATE.md` |
+| `bootstrap` | `_local/handoff/<repo>/state/HANDOFF_STATE.md`, `_local/handoff/<repo>/snapshots/`, optional `AGENTS.md` only when explicitly requested |
+| `onboarding-intake` | `snapshots/00_onboarding_intake.md`, `state/HANDOFF_STATE.md`, maybe lightweight `docs/llm_handoff.md` |
+| `full-build` | Phase snapshots, `docs/human_overview.html`, lightweight `docs/llm_handoff.md`, `docs/llm_handoff.html`, `state/HANDOFF_STATE.md` |
 | `task-load` | No file changes; summary and task plan only |
 | `post-change-refresh` | Affected snapshots, final docs, state, `changes/YYYY-MM-DD_post_change_refresh.md` |
 | `drift-check` | No file changes; drift report only |

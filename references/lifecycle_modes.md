@@ -6,7 +6,7 @@ Use this reference to choose and execute one handoff mode. Prefer the narrowest 
 
 | Situation | Mode | File changes |
 | --- | --- | --- |
-| No `docs/ai_handoff/` or handoff guidance exists | `bootstrap` | Structure/state/workflow only |
+| No `_local/handoff/<repo>/` or handoff guidance exists | `bootstrap` | Local structure/state/workflow only |
 | Inherited docs exist and repository is unfamiliar | `onboarding-intake` | Intake snapshot, state, maybe `llm_handoff.md` |
 | No reliable handoff exists | `full-build` | Staged snapshots and final docs |
 | Starting a normal coding task | `task-load` | None unless explicitly requested |
@@ -15,7 +15,7 @@ Use this reference to choose and execute one handoff mode. Prefer the narrowest 
 
 ## bootstrap
 
-Create or update the handoff workflow section in `AGENTS.md`, create `docs/ai_handoff/`, `docs/ai_handoff/snapshots/`, and initial `HANDOFF_STATE.md`. Do not analyze source code. Only record repository root, mode, timestamp, and unknown project metadata.
+Create `_local/handoff/<repo>/`, `_local/handoff/<repo>/snapshots/`, `_local/handoff/<repo>/docs/`, `_local/handoff/<repo>/changes/`, and initial `_local/handoff/<repo>/state/HANDOFF_STATE.md`. Update `AGENTS.md` only when the user explicitly wants repository-level handoff guidance. Do not analyze source code. Only record repository root, mode, timestamp, and unknown project metadata.
 
 ## onboarding-intake
 
@@ -27,7 +27,7 @@ Run Phase 0-5 from `phase_prompts.md`. Stop after each phase unless the user exp
 
 ## task-load
 
-Read `AGENTS.md`, `HANDOFF_STATE.md`, and `llm_handoff.md` first. Treat `llm_handoff.md` as the route map, then read only task-relevant snapshots and source files. Read `_local/notes/<repo>/` only when useful for the task or explicitly requested, and label it local/private. Do not read `_local/env/` for values. Output a short context summary and task plan. Make no file changes unless the user explicitly asks.
+Read `AGENTS.md`, `_local/handoff/<repo>/state/HANDOFF_STATE.md`, and `_local/handoff/<repo>/docs/llm_handoff.md` first. Treat `llm_handoff.md` as the route map, then read only task-relevant snapshots and source files. Read `_local/notes/<repo>/` only when useful for the task or explicitly requested, and label it local/private. Do not read `_local/env/` for values. Output a short context summary and task plan. Make no file changes unless the user explicitly asks.
 
 ## post-change-refresh
 

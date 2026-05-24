@@ -5,13 +5,13 @@ Use for `onboarding-intake` when joining an unfamiliar repository or inheriting 
 ## Read order
 
 1. `AGENTS.md` and other agent instruction files.
-2. `docs/ai_handoff/HANDOFF_STATE.md`.
-3. Existing `docs/ai_handoff/llm_handoff.md`.
-4. Existing `docs/ai_handoff/snapshots/*.md`.
+2. `_local/handoff/<repo>/state/HANDOFF_STATE.md`.
+3. Existing `_local/handoff/<repo>/docs/llm_handoff.md`.
+4. Existing `_local/handoff/<repo>/snapshots/*.md`.
 5. README, architecture docs, runbooks, ADRs, operations docs, and imported handoffs.
 6. A small set of source files only for critical claim validation.
 
-Read only snapshots that are relevant to the intake goal. Use `llm_handoff.md` as an index when it is present.
+Read only snapshots that are relevant to the intake goal. Use `llm_handoff.md` as an index when it is present. Treat committed `docs/ai_handoff/` files as legacy or shared inherited docs to intake, not as the default write target.
 
 ## Critical-claim validation
 
@@ -27,7 +27,7 @@ Use path-specific evidence. Do not validate every statement.
 
 ## Output
 
-Write `docs/ai_handoff/snapshots/00_onboarding_intake.md` with:
+Write `_local/handoff/<repo>/snapshots/00_onboarding_intake.md` with:
 
 - documents read
 - inherited project summary

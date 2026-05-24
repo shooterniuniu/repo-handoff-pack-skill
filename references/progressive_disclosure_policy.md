@@ -4,15 +4,15 @@ Use this reference when creating, refreshing, or loading LLM-facing handoff arti
 
 ## Goal
 
-`docs/ai_handoff/llm_handoff.md` is a context index, not a full repository digest. It should help a future LLM decide what to read next without spending context on every detail up front.
+`_local/handoff/<repo>/docs/llm_handoff.md` is a context index, not a full repository digest. It should help a future LLM decide what to read next without spending context on every detail up front.
 
-Humans can use `docs/ai_handoff/human_overview.html` and detailed snapshots for broader reading. LLM agents should start with the index, then load only task-relevant snapshots, local notes, and source files.
+Humans can use `_local/handoff/<repo>/docs/human_overview.html` and detailed snapshots for broader reading. LLM agents should start with the index, then load only task-relevant snapshots, local notes, and source files.
 
 ## Default read order for task-load
 
 1. `AGENTS.md`
-2. `docs/ai_handoff/HANDOFF_STATE.md`
-3. `docs/ai_handoff/llm_handoff.md`
+2. `_local/handoff/<repo>/state/HANDOFF_STATE.md`
+3. `_local/handoff/<repo>/docs/llm_handoff.md`
 4. Snapshot files referenced by the task route
 5. Task-relevant source files
 6. Task-relevant `_local/notes/<repo>/` files only when useful or requested
@@ -51,10 +51,10 @@ Prefer several focused snapshots over one large undifferentiated handoff file.
 
 During `full-build` Phase 5 or `post-change-refresh`:
 
-- Generate `human_overview.html` for complete human-readable overview.
-- Generate `llm_handoff.md` as a lightweight index and routing map.
-- Regenerate `llm_handoff.html` from the lightweight index, not from all snapshot content.
-- Preserve detailed evidence in `docs/ai_handoff/snapshots/*.md`.
+- Generate `_local/handoff/<repo>/docs/human_overview.html` for complete human-readable overview.
+- Generate `_local/handoff/<repo>/docs/llm_handoff.md` as a lightweight index and routing map.
+- Regenerate `_local/handoff/<repo>/docs/llm_handoff.html` from the lightweight index, not from all snapshot content.
+- Preserve detailed evidence in `_local/handoff/<repo>/snapshots/*.md`.
 
 Only reread source files when snapshots identify a specific critical gap.
 

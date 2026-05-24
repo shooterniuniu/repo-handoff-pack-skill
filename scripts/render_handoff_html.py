@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import os
 import re
 from pathlib import Path
 
@@ -165,7 +166,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("repository_root", help="Repository root.")
     parser.add_argument("markdown_path", help="Markdown input path.")
-    parser.add_argument("html_path", help="HTML output path under docs/ai_handoff.")
+    parser.add_argument(
+        "html_path",
+        help="HTML output path under _local/handoff/<repo>/docs, or docs/ai_handoff for explicit shared output.",
+    )
     args = parser.parse_args()
 
     root = Path(args.repository_root).resolve()
@@ -176,11 +180,17 @@ def main() -> int:
     if not html_path.is_absolute():
         html_path = root / html_path
 
-    handoff_root = root / "docs" / "ai_handoff"
+    local_root = Path(os.environ.get("REPO_HANDOFF_LOCAL_ROOT", root.parent / "_local"))
+    local_handoff_docs = local_root / "handoff" / root.name / "docs"
+    shared_handoff_root = root / "docs" / "ai_handoff"
     try:
-        html_path.resolve().relative_to(handoff_root.resolve())
+        resolved_html_path = html_path.resolve()
+        try:
+            resolved_html_path.relative_to(local_handoff_docs.resolve())
+        except ValueError:
+            resolved_html_path.relative_to(shared_handoff_root.resolve())
     except ValueError:
-        parser.error("html_path must be under docs/ai_handoff")
+        parser.error("html_path must be under _local/handoff/<repo>/docs or docs/ai_handoff")
 
     body = markdown_to_html(md_path.read_text(encoding="utf-8"))
     document = (

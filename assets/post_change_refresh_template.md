@@ -34,9 +34,9 @@
 
 ## Final documents regenerated
 
-- `docs/ai_handoff/human_overview.html`
-- `docs/ai_handoff/llm_handoff.md`
-- `docs/ai_handoff/llm_handoff.html`
+- `_local/handoff/<repo>/docs/human_overview.html`
+- `_local/handoff/<repo>/docs/llm_handoff.md`
+- `_local/handoff/<repo>/docs/llm_handoff.html`
 
 ## Tests / validation
 

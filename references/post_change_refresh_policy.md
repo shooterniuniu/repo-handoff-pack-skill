@@ -33,18 +33,18 @@ Read changed files, directly related files, affected snapshots, and final handof
 
 ## Step 4: Update affected snapshots
 
-Update only affected `docs/ai_handoff/snapshots/*.md`. Preserve unchanged sections where the evidence still applies. Add conflict records when docs and code disagree.
+Update only affected `_local/handoff/<repo>/snapshots/*.md`. Preserve unchanged sections where the evidence still applies. Add conflict records when docs and code disagree.
 
 ## Step 5: Regenerate final docs
 
 Regenerate:
 
-- `docs/ai_handoff/llm_handoff.md`
-- `docs/ai_handoff/llm_handoff.html`
-- `docs/ai_handoff/human_overview.html`
+- `_local/handoff/<repo>/docs/llm_handoff.md`
+- `_local/handoff/<repo>/docs/llm_handoff.html`
+- `_local/handoff/<repo>/docs/human_overview.html`
 
 Final docs should synthesize snapshots; source files should only be reread for specific gaps. Keep `llm_handoff.md` as a lightweight index and update only affected routes, snapshot references, confidence, and freshness notes instead of inlining detailed snapshot content.
 
 ## Step 6: Record state and change report
 
-Write `docs/ai_handoff/changes/YYYY-MM-DD_post_change_refresh.md` with changed files, files read, affected snapshots, summary, tests/validation, conflicts, unknowns, and next action. Update `HANDOFF_STATE.md` metadata, last changed source files, last updated snapshots, conflicts, and resume instruction.
+Write `_local/handoff/<repo>/changes/YYYY-MM-DD_post_change_refresh.md` with changed files, files read, affected snapshots, summary, tests/validation, conflicts, unknowns, and next action. Update `_local/handoff/<repo>/state/HANDOFF_STATE.md` metadata, last changed source files, last updated snapshots, conflicts, and resume instruction.

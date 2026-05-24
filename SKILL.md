@@ -1,23 +1,27 @@
 ---
 name: repo-handoff-pack
-description: Repo Handoff Lifecycle Skill v2. Use for repository handoff lifecycle tasks: bootstrap docs/ai_handoff, intake inherited handoff docs, run staged full-build documentation, load lightweight context indexes before coding, refresh handoff docs after code changes, check documentation drift, or manage local/private _local workspace context. Produces human-readable and LLM-oriented handoff artifacts without modifying business code during documentation-only work.
+description: "Repo Handoff Lifecycle Skill v2. Use for repository handoff lifecycle tasks: bootstrap a local _local handoff workspace, intake inherited handoff docs, run staged full-build documentation, load lightweight context indexes before coding, refresh handoff docs after code changes, check documentation drift, or manage local/private _local workspace context. Produces human-readable and LLM-oriented handoff artifacts under sibling _local by default without modifying business code during documentation-only work."
 ---
 
 # Repo Handoff Lifecycle Skill v2
 
-Use this skill to manage repository handoff memory across the project lifecycle. The memory directory is `docs/ai_handoff/`; the skill method lives in `.agents/skills/repo-handoff-pack/`.
+Use this skill to manage repository handoff memory across the project lifecycle. Generated materials that are not original repository code or explicitly shared repository docs live in a sibling `_local/` workspace by default. The default generated handoff root is `_local/handoff/<repo>/`: final docs in `docs/`, detailed snapshots in `snapshots/`, refresh reports in `changes/`, and state in `state/`. Personal learning materials live in `_local/notes/<repo>/`; local environments live in `_local/env/<repo>/`. The skill method lives in `.agents/skills/repo-handoff-pack/`.
 
 Choose one mode before taking action. If the user did not name a mode, infer the narrowest mode that satisfies the request and state it briefly. Documentation-only modes must not modify business code.
 
 ## Core rules
 
 - Do not modify business code during documentation-only handoff tasks.
-- Write generated handoff artifacts only under `docs/ai_handoff/`.
+- Route generated materials to sibling `_local/` by default when they are not original repository files.
+- Write generated handoff artifacts under `_local/handoff/<repo>/` by default.
+- Use `docs/ai_handoff/` only when the user explicitly asks for committed/shared repository handoff docs or when reading an existing legacy handoff.
+- Put personal study notes, source-reading logs, questions, and local task notes under `_local/notes/<repo>/`.
+- Put local environment material under `_local/env/<repo>/`, without copying secret values.
 - Write skill workflow resources only under `.agents/skills/repo-handoff-pack/`.
 - Do not write generated documentation into `src/`, `app/`, `lib/`, `server/`, `packages/`, `services/`, `components/`, or other business-code directories.
 - Do not scan an entire repository in one pass.
-- Keep `docs/ai_handoff/llm_handoff.md` as a lightweight context index; put detailed evidence in snapshots and load it on demand.
-- Treat sibling `_local/` workspaces as optional local/private context. Do not commit them, and never copy secrets or raw environment values into handoff artifacts.
+- Keep `_local/handoff/<repo>/docs/llm_handoff.md` as a lightweight context index; put detailed evidence in snapshots and load it on demand.
+- Treat sibling `_local/` workspaces as local/private context. Do not commit them, and never copy secrets or raw environment values into handoff artifacts.
 - Always write intermediate snapshots before final synthesis in `full-build`.
 - Mark uncertainty explicitly.
 - Stop after each staged phase unless the user explicitly asks to continue.
@@ -25,7 +29,7 @@ Choose one mode before taking action. If the user did not name a mode, infer the
 
 ## Mode selection
 
-- Missing handoff structure: use `bootstrap`.
+- Missing local handoff structure: use `bootstrap`.
 - Unfamiliar repository or inherited handoff docs: use `onboarding-intake`.
 - No reliable handoff exists: use `full-build`.
 - Normal coding task starting point: use `task-load`.
@@ -43,16 +47,17 @@ Use when a repository does not yet have a handoff structure.
 Purpose:
 
 - Create or update `AGENTS.md` handoff workflow section.
-- Create `docs/ai_handoff/` structure.
+- Create `_local/handoff/<repo>/` structure.
 - Create initial `HANDOFF_STATE.md`.
 - Do not analyze source code.
+- Update `AGENTS.md` only when the user explicitly wants repository-level handoff guidance.
 
 Outputs:
 
-- `AGENTS.md` handoff section.
-- `docs/ai_handoff/HANDOFF_STATE.md`.
-- `docs/ai_handoff/WORKFLOW.md` when useful.
-- `docs/ai_handoff/snapshots/` directory.
+- Optional `AGENTS.md` handoff section when explicitly requested.
+- `_local/handoff/<repo>/state/HANDOFF_STATE.md`.
+- `_local/handoff/<repo>/docs/WORKFLOW.md` when useful.
+- `_local/handoff/<repo>/snapshots/` directory.
 
 ### onboarding-intake
 
@@ -61,7 +66,7 @@ Use when entering an unfamiliar repository or reading someone else's handoff doc
 Purpose:
 
 - Read existing handoff-like documents.
-- Read README, AGENTS.md, architecture docs, runbooks, ADRs, existing `docs/ai_handoff` files, and other project documentation.
+- Read README, AGENTS.md, architecture docs, runbooks, ADRs, existing `_local/handoff/<repo>/` files, legacy `docs/ai_handoff` files, and other project documentation.
 - Summarize inherited context.
 - Validate only critical claims against a small number of source files.
 - Mark conflicts and uncertainty.
@@ -69,9 +74,9 @@ Purpose:
 
 Outputs:
 
-- `docs/ai_handoff/snapshots/00_onboarding_intake.md`.
-- `docs/ai_handoff/llm_handoff.md` as a lightweight index if missing or stale.
-- `docs/ai_handoff/HANDOFF_STATE.md`.
+- `_local/handoff/<repo>/snapshots/00_onboarding_intake.md`.
+- `_local/handoff/<repo>/docs/llm_handoff.md` as a lightweight index if missing or stale.
+- `_local/handoff/<repo>/state/HANDOFF_STATE.md`.
 
 ### full-build
 
@@ -86,16 +91,16 @@ Purpose:
 
 Outputs:
 
-- `docs/ai_handoff/snapshots/00_repo_inventory.md`.
-- `docs/ai_handoff/snapshots/01_framework_map.md`.
-- `docs/ai_handoff/snapshots/02_agent_design.md`.
-- `docs/ai_handoff/snapshots/03_chain_and_tools.md`.
-- `docs/ai_handoff/snapshots/04_schema_datastore_prompt.md`.
-- `docs/ai_handoff/snapshots/05_tests_and_risks.md`.
-- `docs/ai_handoff/human_overview.html`.
-- `docs/ai_handoff/llm_handoff.md` as a lightweight index and routing map.
-- `docs/ai_handoff/llm_handoff.html`.
-- `docs/ai_handoff/HANDOFF_STATE.md`.
+- `_local/handoff/<repo>/snapshots/00_repo_inventory.md`.
+- `_local/handoff/<repo>/snapshots/01_framework_map.md`.
+- `_local/handoff/<repo>/snapshots/02_agent_design.md`.
+- `_local/handoff/<repo>/snapshots/03_chain_and_tools.md`.
+- `_local/handoff/<repo>/snapshots/04_schema_datastore_prompt.md`.
+- `_local/handoff/<repo>/snapshots/05_tests_and_risks.md`.
+- `_local/handoff/<repo>/docs/human_overview.html`.
+- `_local/handoff/<repo>/docs/llm_handoff.md` as a lightweight index and routing map.
+- `_local/handoff/<repo>/docs/llm_handoff.html`.
+- `_local/handoff/<repo>/state/HANDOFF_STATE.md`.
 
 ### task-load
 
@@ -105,8 +110,8 @@ Purpose:
 
 - Load project context without regenerating documentation.
 - Read `AGENTS.md`.
-- Read `docs/ai_handoff/HANDOFF_STATE.md`.
-- Read `docs/ai_handoff/llm_handoff.md` as the context index.
+- Read `_local/handoff/<repo>/state/HANDOFF_STATE.md`.
+- Read `_local/handoff/<repo>/docs/llm_handoff.md` as the context index.
 - Read only task-relevant snapshots named by the index.
 - Read `_local/notes/<repo>/` only when useful for the task or explicitly requested, and mark it local/private.
 - Read only task-relevant source files.
@@ -131,12 +136,12 @@ Purpose:
 
 Outputs:
 
-- Updated affected `docs/ai_handoff/snapshots/*.md`.
-- `docs/ai_handoff/llm_handoff.md`.
-- `docs/ai_handoff/llm_handoff.html`.
-- `docs/ai_handoff/human_overview.html`.
-- `docs/ai_handoff/HANDOFF_STATE.md`.
-- `docs/ai_handoff/changes/YYYY-MM-DD_post_change_refresh.md`.
+- Updated affected `_local/handoff/<repo>/snapshots/*.md`.
+- `_local/handoff/<repo>/docs/llm_handoff.md`.
+- `_local/handoff/<repo>/docs/llm_handoff.html`.
+- `_local/handoff/<repo>/docs/human_overview.html`.
+- `_local/handoff/<repo>/state/HANDOFF_STATE.md`.
+- `_local/handoff/<repo>/changes/YYYY-MM-DD_post_change_refresh.md`.
 
 ### drift-check
 
@@ -159,8 +164,8 @@ When documentation conflicts with code, use this order:
 
 1. Current source code
 2. Current `AGENTS.md`
-3. Current `docs/ai_handoff/llm_handoff.md`
-4. Current `docs/ai_handoff/snapshots/`
+3. Current `_local/handoff/<repo>/docs/llm_handoff.md`
+4. Current `_local/handoff/<repo>/snapshots/`
 5. README and other project docs
 6. Imported or inherited handoff documents
 7. Local/private notes, when explicitly read for the task
@@ -193,7 +198,7 @@ Never invent architecture details, tool behavior, schemas, prompts, or data flow
 
 ## Handoff state contract
 
-Every `docs/ai_handoff/HANDOFF_STATE.md` should include:
+Every `_local/handoff/<repo>/state/HANDOFF_STATE.md` should include:
 
 ```markdown
 # Handoff State
@@ -251,7 +256,7 @@ Avoid these paths unless the user explicitly requires them:
 - `vendor/`
 - `.env`
 - `.env.*` except safe examples such as `.env.example`
-- `_local/` except task-relevant `_local/notes/<repo>/` when explicitly useful
+- `_local/` except task-relevant `_local/handoff/<repo>/`, `_local/notes/<repo>/`, or safe `_local/env/<repo>/` filenames when explicitly useful
 - generated files
 - large binary files
 - large datasets
@@ -294,7 +299,7 @@ Scripts are helpers, not authorities. Validate any important script output again
 
 Before finishing a handoff task:
 
-- Verify required output files exist.
+- Verify required output files exist under `_local/handoff/<repo>/` unless the user explicitly requested committed/shared repository handoff docs.
 - Verify no business code was modified during documentation-only work.
 - Verify excluded directories were not scanned deeply.
 - Verify `HANDOFF_STATE.md` was updated when files changed.

@@ -6,7 +6,7 @@ Use these prompts for `full-build`. Stop after each phase unless the user explic
 
 Inspect only directory tree, top-level README-like files, top-level configs, manifests, and agent instruction files.
 
-Output `docs/ai_handoff/snapshots/00_repo_inventory.md` with:
+Output `_local/handoff/<repo>/snapshots/00_repo_inventory.md` with:
 
 - repository shape and excluded paths
 - detected language/framework/package hints
@@ -21,7 +21,7 @@ Output `docs/ai_handoff/snapshots/00_repo_inventory.md` with:
 
 Read only Phase 0 recommended files unless a small config file is clearly necessary.
 
-Output `docs/ai_handoff/snapshots/01_framework_map.md` with:
+Output `_local/handoff/<repo>/snapshots/01_framework_map.md` with:
 
 - stack and framework structure
 - package/workspace boundaries
@@ -35,7 +35,7 @@ Output `docs/ai_handoff/snapshots/01_framework_map.md` with:
 
 Read relevant files about agent, router, workflow, graph, state, memory, prompt, model configuration, and lifecycle hooks.
 
-Output `docs/ai_handoff/snapshots/02_agent_design.md` with:
+Output `_local/handoff/<repo>/snapshots/02_agent_design.md` with:
 
 - roles and lifecycle
 - inputs and outputs
@@ -50,7 +50,7 @@ Output `docs/ai_handoff/snapshots/02_agent_design.md` with:
 
 Read relevant files about tools, registries, function calling, chains, callbacks, integrations, side effects, and error paths.
 
-Output `docs/ai_handoff/snapshots/03_chain_and_tools.md` with:
+Output `_local/handoff/<repo>/snapshots/03_chain_and_tools.md` with:
 
 - end-to-end request chain
 - tool registry and caller map
@@ -64,8 +64,8 @@ Read only files identified by prior snapshots.
 
 Outputs:
 
-- `docs/ai_handoff/snapshots/04_schema_datastore_prompt.md`
-- `docs/ai_handoff/snapshots/05_tests_and_risks.md`
+- `_local/handoff/<repo>/snapshots/04_schema_datastore_prompt.md`
+- `_local/handoff/<repo>/snapshots/05_tests_and_risks.md`
 
 Include schema/model relationships, state persistence, memory, prompt templates and variables, data flow, tests, validation commands, coverage judgment, risks, and maintenance recommendations.
 
@@ -75,9 +75,9 @@ Use snapshots as the primary source.
 
 Outputs:
 
-- `docs/ai_handoff/human_overview.html`
-- `docs/ai_handoff/llm_handoff.md` as a lightweight context index and task routing map
-- `docs/ai_handoff/llm_handoff.html`
-- updated `docs/ai_handoff/HANDOFF_STATE.md`
+- `_local/handoff/<repo>/docs/human_overview.html`
+- `_local/handoff/<repo>/docs/llm_handoff.md` as a lightweight context index and task routing map
+- `_local/handoff/<repo>/docs/llm_handoff.html`
+- updated `_local/handoff/<repo>/state/HANDOFF_STATE.md`
 
 Only re-read source files when snapshots identify a specific critical gap. Final docs must be useful to both humans and future LLM agents. Keep detailed explanations in snapshots and the human overview; keep the LLM handoff concise enough to guide on-demand reads.

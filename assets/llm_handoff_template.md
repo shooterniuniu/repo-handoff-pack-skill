@@ -13,7 +13,7 @@
 
 ## How to resume
 
-Read `AGENTS.md`, `docs/ai_handoff/HANDOFF_STATE.md`, and this file first. Then read only task-relevant snapshots, source files, and optional local/private notes named below.
+Read `AGENTS.md`, `_local/handoff/<repo>/state/HANDOFF_STATE.md`, and this file first. Then read only task-relevant snapshots, source files, and optional local/private notes named below.
 
 ## Project purpose
 
@@ -58,6 +58,7 @@ Read `AGENTS.md`, `docs/ai_handoff/HANDOFF_STATE.md`, and this file first. Then 
 
 | Path | Use when | Safety notes |
 | --- | --- | --- |
+| `_local/handoff/<repo>/snapshots/` | Task needs detailed handoff evidence | Treat as generated local context; verify critical claims against source |
 | `_local/notes/<repo>/` | Task needs personal study notes or user requests them | Mark as local/private; do not treat as repo truth |
 | `_local/env/<repo>/` | Environment setup questions only | Do not read or copy secret values |
 

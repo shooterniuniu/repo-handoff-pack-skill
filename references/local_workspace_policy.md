@@ -1,6 +1,8 @@
 # Local Workspace Policy
 
-Use this reference when a user wants local study notes, local environment files, virtual environments, datasets, logs, or scratch work near one or more repositories without committing them.
+Use this reference when a user wants generated handoff artifacts, local study notes, local environment files, virtual environments, datasets, logs, or scratch work near one or more repositories without committing them.
+
+When generated materials are not original repository files, prefer sibling `_local/` over repository paths. Use `_local/handoff/<repo>/` for generated handoff artifacts, `_local/notes/<repo>/` for personal learning materials, and `_local/env/<repo>/` for local environment materials. Use `docs/ai_handoff/` only when the user explicitly asks for committed/shared repository handoff docs or when reading existing legacy handoff files.
 
 ## Default layout
 
@@ -11,6 +13,13 @@ For a workspace that contains multiple repositories, prefer a sibling `_local/` 
 +-- <repo-a>/
 +-- <repo-b>/
 +-- _local/
+    +-- handoff/
+    |   +-- <repo-a>/
+    |   |   +-- docs/
+    |   |   +-- snapshots/
+    |   |   +-- changes/
+    |   |   +-- state/
+    |   +-- <repo-b>/
     +-- notes/
     |   +-- <repo-a>/
     |   +-- <repo-b>/
@@ -38,6 +47,10 @@ REPO_HANDOFF_LOCAL_ROOT=/path/to/_local
 
 ## What each directory is for
 
+- `_local/handoff/<repo>/docs/`: generated human and LLM handoff documents.
+- `_local/handoff/<repo>/snapshots/`: staged evidence snapshots.
+- `_local/handoff/<repo>/changes/`: incremental refresh reports.
+- `_local/handoff/<repo>/state/`: handoff state and resume metadata.
 - `_local/notes/<repo>/`: personal study notes, source-reading logs, questions, diagrams, and task notes.
 - `_local/notes/shared/`: cross-repository notes.
 - `_local/env/<repo>/`: local environment files, secret-bearing configs, and deployment-local settings.
@@ -49,10 +62,12 @@ REPO_HANDOFF_LOCAL_ROOT=/path/to/_local
 ## Safety rules
 
 - Do not commit `_local/` to any repository.
+- Do not write generated handoff artifacts into repository paths by default.
 - Do not write `_local/` contents into `docs/ai_handoff/` by default.
+- Do not place generated materials in `docs/ai_handoff/` unless the user explicitly wants them converted into shareable repository handoff artifacts.
 - `_local/notes/<repo>/` may be read during `task-load` only when useful for the task or explicitly requested.
 - Always label `_local/notes` evidence as `local/private`.
-- Local notes never outrank current source code, `AGENTS.md`, or committed handoff docs.
+- Local notes never outrank current source code, `AGENTS.md`, or current handoff evidence.
 - Never read, quote, summarize, or copy raw secret values from `_local/env/`.
 - For env work, prefer committed safe examples such as `.env.example`, `.env.template`, or documented variable names.
 - If the user explicitly asks about `_local/env/`, report filenames and required variable names where possible, not values.
@@ -81,4 +96,4 @@ Only edit a repository's committed `.gitignore` when the user wants the rule sha
 
 ## Handoff usage
 
-`llm_handoff.md` can mention that local notes exist and point to `_local/notes/<repo>/`, but it should not inline private notes. Snapshots may cite local notes only when the user requested that private context and the citation is clearly marked `local/private`.
+`_local/handoff/<repo>/docs/llm_handoff.md` can mention that local notes exist and point to `_local/notes/<repo>/`, but it should not inline private notes. Snapshots may cite local notes only when the user requested that private context and the citation is clearly marked `local/private`.
